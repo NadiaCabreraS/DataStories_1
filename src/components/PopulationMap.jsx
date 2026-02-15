@@ -15,17 +15,7 @@ const PopulationMap = ({ nivelActivo }) => {
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: {
-        version: 8,
-        sources: {},
-        layers: [
-          {
-            id: 'background',
-            type: 'background',
-            paint: { 'background-color': '#000000' },
-          },
-        ],
-      },
+      style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
       center: [-74, -15],
       zoom: 3,
       maxZoom: 7, // si tus tiles llegan hasta z=7
