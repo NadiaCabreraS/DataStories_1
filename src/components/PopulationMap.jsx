@@ -6,74 +6,75 @@ const PopulationMap = ({ nivelActivo }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
+  // Nombres EXACTOS de tus carpetas dentro de: public/0_tiles/
   const niveles = ['base', '500', '1000', '2000', '3000', '4000', '4500'];
 
-  // EFECTO 1: Inicialización del Mapa
+  // EFECTO 1: Inicialización del mapa (una sola vez)
   useEffect(() => {
-    if (map.current) return; // Evita duplicar el mapa
+    if (map.current) return;
 
     map.current = new maplibregl.Map({
       container: mapContainer.current,
       style: {
         version: 8,
         sources: {},
-        layers: [{
-          id: 'background',
-          type: 'background',
-          paint: { 'background-color': '#000000' } // Fondo negro mientras cargan los tiles
-        }]
+        layers: [
+          {
+            id: 'background',
+            type: 'background',
+            paint: { 'background-color': '#000000' },
+          },
+        ],
       },
-      center: [-74, -15], 
+      center: [-74, -15],
       zoom: 3,
-      maxZoom: 7 // Bloqueamos en 7 porque borramos el 8
+      maxZoom: 7, // si tus tiles llegan hasta z=7
     });
   }, []);
 
-
-
-// EFECTO 2: Manejo de Capas (Aquí va el cambio de los tiles)
+  // EFECTO 2: Crear/activar capas según nivelActivo
   useEffect(() => {
     const mapInstance = map.current;
     if (!mapInstance) return;
 
     const updateLayers = () => {
       const nivelNombre = niveles[nivelActivo];
+      const BASE = import.meta.env.BASE_URL; // en GH Pages: "/DataStories_1/"
 
-      // 1. Si la fuente no existe, la creamos con la ruta RELATIVA
-      if (!mapInstance.getSource(`source-${nivelNombre}`)) {
-        mapInstance.addSource(`source-${nivelNombre}`, {
+      const sourceId = `source-${nivelNombre}`;
+      const layerId = `layer-${nivelNombre}`;
+
+      // 1) Crear source + layer si no existen
+      if (!mapInstance.getSource(sourceId)) {
+        mapInstance.addSource(sourceId, {
           type: 'raster',
-          // EL CAMBIO CLAVE: El punto '.' antes de /0_tiles
-          tiles: [`./0_tiles/${nivelNombre}/{z}/{x}/{y}.png`], 
+          tiles: [`${BASE}0_tiles/${nivelNombre}/{z}/{x}/{y}.png`],
           tileSize: 256,
         });
 
         mapInstance.addLayer({
-          id: `layer-${nivelNombre}`,
+          id: layerId,
           type: 'raster',
-          source: `source-${nivelNombre}`,
+          source: sourceId,
           paint: {
             'raster-opacity': 0,
-            'raster-opacity-transition': { duration: 500 }
+            'raster-opacity-transition': { duration: 500 },
           },
         });
       }
 
-      // 2. Lógica de visibilidad (encender activa, apagar resto)
+      // 2) Encender capa activa, apagar el resto
       niveles.forEach((nivel) => {
-        if (mapInstance.getLayer(`layer-${nivel}`)) {
-          const targetOpacity = nivel === nivelNombre ? 1 : 0;
-          mapInstance.setPaintProperty(`layer-${nivel}`, 'raster-opacity', targetOpacity);
+        const id = `layer-${nivel}`;
+        if (mapInstance.getLayer(id)) {
+          mapInstance.setPaintProperty(id, 'raster-opacity', nivel === nivelNombre ? 1 : 0);
         }
       });
     };
 
-    if (mapInstance.isStyleLoaded()) {
-      updateLayers();
-    } else {
-      mapInstance.once('load', updateLayers);
-    }
-  }, [nivelActivo]);
+    if (mapInstance.isStyleLoaded()) updateLayers();
+    else mapInstance.once('load', updateLayers);
+  }, [nivelActivo]); // (niveles no cambia)
 
   return <div ref={mapContainer} style={{ width: '100%', height: '100vh' }} />;
 };
