@@ -9,5 +9,7 @@ export default defineConfig({
         plugins: [['babel-plugin-react-compiler']],
       },
     }),
+    tailwindcss(),
   ],
+  base: '/DataStories_1/'
 })
