@@ -6,7 +6,7 @@ const PopulationMap = ({ nivelActivo }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
-  const niveles = ['base', '500m', '1000m', '2000m', '3000m', '4000m', '4500m'];
+  const niveles = ['base', '500', '1000', '2000', '3000', '4000', '4500'];
 
   // EFECTO 1: Inicialización del Mapa
   useEffect(() => {
