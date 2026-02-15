@@ -1,3 +1,5 @@
 node_modules/
 *.zip
 public/0_tiles/
+dist/
+node_modules/

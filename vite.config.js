@@ -1,15 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/postcss' // <--- CAMBIA ESTO
+import autoprefixer from 'autoprefixer'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react({
-      babel: {
-        plugins: [['babel-plugin-react-compiler']],
-      },
-    }),
-    tailwindcss(),
-  ],
-  base: '/DataStories_1/'
+  plugins: [react()],
+  css: {
+    postcss: {
+      plugins: [
+        tailwindcss(), // <--- AÑADE LOS PARÉNTESIS ()
+        autoprefixer(),
+      ],
+    },
+  },
+  base: '/DataStories_1/',
 })
