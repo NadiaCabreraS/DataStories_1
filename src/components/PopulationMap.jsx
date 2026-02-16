@@ -2,39 +2,65 @@ import React, { useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-const PopulationMap = ({ nivelActivo }) => {
+// 1. Movemos niveles aquí afuera para que todos los efectos puedan verlo
+const NIVELES = ['base', '500', '1000', '2000', '3000', '4000', '4500'];
+
+const PopulationMap = ({ nivelActivo, dataGeo, onSeleccionarPais }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
-
-  // Nombres EXACTOS de tus carpetas dentro de: public/0_tiles/
-  const niveles = ['base', '500', '1000', '2000', '3000', '4000', '4500'];
 
   // EFECTO 1: Inicialización del mapa (una sola vez)
   useEffect(() => {
     if (map.current) return;
-
     map.current = new maplibregl.Map({
       container: mapContainer.current,
       style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
       center: [-74, -15],
-      zoom: 3,
-      maxZoom: 7, // si tus tiles llegan hasta z=7
+      zoom: 3.5,
+      maxZoom: 7, 
+      attributionControl: false
     });
   }, []);
 
-  // EFECTO 2: Crear/activar capas según nivelActivo
+  // EFECTO 2: Capa de Países (GeoJSON) y Clics
+  useEffect(() => {
+    const mapInstance = map.current;
+    if (!mapInstance || !dataGeo) return;
+
+    const setupGeoJson = () => {
+      if (!mapInstance.getSource('countries-source')) {
+        mapInstance.addSource('countries-source', { type: 'geojson', data: dataGeo });
+        mapInstance.addLayer({
+          id: 'paises-layer',
+          type: 'fill',
+          source: 'countries-source',
+          paint: {
+            'fill-color': '#ff0000', // Rojo temporal para probar
+            'fill-opacity': 0.0 
+          }
+        });
+
+        mapInstance.on('click', 'paises-layer', (e) => {
+          onSeleccionarPais(e.features[0]);
+        });
+      }
+    };
+
+    if (mapInstance.isStyleLoaded()) setupGeoJson();
+    else mapInstance.once('load', setupGeoJson);
+  }, [dataGeo]);
+
+  // EFECTO 3: Control de Capas Raster (Tiles)
   useEffect(() => {
     const mapInstance = map.current;
     if (!mapInstance) return;
 
     const updateLayers = () => {
-      const nivelNombre = niveles[nivelActivo];
-      const BASE = import.meta.env.BASE_URL; // en GH Pages: "/DataStories_1/"
-
+      const nivelNombre = NIVELES[nivelActivo]; // Ahora sí encontrará NIVELES
+      const BASE = import.meta.env.BASE_URL;
       const sourceId = `source-${nivelNombre}`;
       const layerId = `layer-${nivelNombre}`;
 
-      // 1) Crear source + layer si no existen
       if (!mapInstance.getSource(sourceId)) {
         mapInstance.addSource(sourceId, {
           type: 'raster',
@@ -46,15 +72,14 @@ const PopulationMap = ({ nivelActivo }) => {
           id: layerId,
           type: 'raster',
           source: sourceId,
-          paint: {
+          paint: { 
             'raster-opacity': 0,
-            'raster-opacity-transition': { duration: 500 },
+            'raster-opacity-transition': { duration: 500 }
           },
-        });
+        }, 'paises-layer'); // El segundo argumento asegura que los países queden ARRIBA
       }
 
-      // 2) Encender capa activa, apagar el resto
-      niveles.forEach((nivel) => {
+      NIVELES.forEach((nivel) => {
         const id = `layer-${nivel}`;
         if (mapInstance.getLayer(id)) {
           mapInstance.setPaintProperty(id, 'raster-opacity', nivel === nivelNombre ? 1 : 0);
@@ -64,9 +89,9 @@ const PopulationMap = ({ nivelActivo }) => {
 
     if (mapInstance.isStyleLoaded()) updateLayers();
     else mapInstance.once('load', updateLayers);
-  }, [nivelActivo]); // (niveles no cambia)
+  }, [nivelActivo]);
 
-  return <div ref={mapContainer} style={{ width: '100%', height: '100vh' }} />;
+  return <div ref={mapContainer} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0}} />;
 };
 
 export default PopulationMap;
