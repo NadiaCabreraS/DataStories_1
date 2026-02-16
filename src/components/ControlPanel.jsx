@@ -2,12 +2,11 @@ import React from 'react';
 
 const ControlPanel = ({ nivel, setNivel, etiquetas }) => {
 const leyendaItems = [
-  { color: '#440154', rango: '0', desc: 'Deshabitado' },
-  { color: '#3b528b', rango: '1 - 5k', desc: 'Baja' },
-  { color: '#21918c', rango: '5k - 15k', desc: 'Media' },
-  { color: '#5ec962', rango: '15k - 25k', desc: 'Alta' },
-  { color: '#fde725', rango: '25k - 35k', desc: 'Muy Alta' },
-  { color: '#d7191c', rango: '35k+', desc: 'Extrema' },
+    { color: '#3b528b', rango: '1 - 5k', desc: 'Low' },
+  { color: '#21918c', rango: '5k - 15k', desc: 'Medium' },
+  { color: '#5ec962', rango: '15k - 25k', desc: 'High' },
+  { color: '#fde725', rango: '25k - 35k', desc: 'Very High' },
+  { color: '#d7191c', rango: '35k+', desc: 'Big Cities' },
 ];
 
   const cardStyle = {
