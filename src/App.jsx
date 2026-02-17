@@ -29,22 +29,23 @@ function App() {
 
       {/* CAPA 2: LA INTERFAZ (Arriba) */}
       {/* Usamos un zIndex mucho más alto y fixed para que no dependa del flujo del mapa */}
-      <nav 
-        style={{ 
-          position: 'fixed', 
-          top: 0, 
-          left: 0, 
-          width: '500px', 
-          height: '100vh', 
-          zIndex: 9999, 
-          pointerEvents: 'none', // Permite tocar el mapa en zonas vacías
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: '20px',
-          padding: '40px'
-        }}
-      >
+          <nav
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: 'min(92vw, 520px)',       // ✅ nunca más grande que 520px, pero se achica en pantallas chicas
+              height: '100dvh',                // ✅ mejor que 100vh en algunos browsers
+              zIndex: 9999,
+              pointerEvents: 'none',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: '16px',
+              padding: 'clamp(16px, 3vw, 32px)' // ✅ padding que escala con el viewport
+            }}
+          >
+      
         
         {/* CAJA 1: TITULO */}
         
@@ -70,9 +71,13 @@ function App() {
   
 
         {/* ALTITUDE CHART */}
-        <div style={{ pointerEvents: 'auto', marginTop: '20px', width: '550px',height: '400px', // <--- VITAL: Ponle píxeles fijos para probar
-  backgroundColor: 'rgba(255, 255, 255, 0.05)', // Un fondo gris oscuro para verlo
-  borderRadius: '12px'
+        <div style={{ 
+        pointerEvents: 'auto', 
+        marginTop: '20px', 
+        maxWidth: '550px',
+         height: 'clamp(240px, 32vh, 380px)', // <--- VITAL: Ponle píxeles fijos para probar
+        backgroundColor: 'rgba(255, 255, 255, 0.05)', // Un fondo gris oscuro para verlo
+        borderRadius: '12px'
 }}>
           
           <AltitudeChart 
