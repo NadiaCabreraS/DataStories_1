@@ -7,7 +7,7 @@ const Title = () => {
     backdropFilter: 'blur(12px)',
     WebkitBackdropFilter: 'blur(12px)',
     color: 'white',
-    padding: '24px',
+    padding: '25px',
     borderRadius: '16px',
     width: '500px',
 
@@ -19,8 +19,9 @@ const Title = () => {
     <header style={headerStyle}>
       <h1 style={{ 
         margin: 0, 
-        fontWeight: 900, 
-        fontSize: '33px', 
+        fontWeight: 600, 
+        fontFamily: "'Satoshi', sans-serif",
+        fontSize: '45px', 
         textTransform: 'uppercase',
         lineHeight: '1.1',
         letterSpacing: '-1px'
@@ -30,11 +31,12 @@ const Title = () => {
       <h2 style={{ 
         margin: '8px 0 0 0', 
         fontWeight: 400, 
-        fontSize: '14px', 
-        textTransform: 'uppercase',
+        fontSize: '16px', 
+        
+        fontFamily: "'Satoshi', sans-serif",
         letterSpacing: '1px',
-        color: 'rgba(255, 255, 255, 0.6)',
-        lineHeight: '1.4'
+        color: 'rgba(255, 255, 255, 0.8)',
+        lineHeight: '1.5'
       }}>
         A visual exploration of elevation and settlement in the Andes
       </h2>

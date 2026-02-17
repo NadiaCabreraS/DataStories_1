@@ -2,11 +2,12 @@ import React from 'react';
 
 const ControlPanel = ({ nivel, setNivel, etiquetas }) => {
 const leyendaItems = [
-    { color: '#3b528b', rango: '1 - 5k', desc: 'Low' },
-  { color: '#21918c', rango: '5k - 15k', desc: 'Medium' },
-  { color: '#5ec962', rango: '15k - 25k', desc: 'High' },
-  { color: '#fde725', rango: '25k - 35k', desc: 'Very High' },
-  { color: '#d7191c', rango: '35k+', desc: 'Big Cities' },
+  { color: '#4b2a7d', rango: '< 2k' },
+    { color: '#4686fb', rango: '2 - 5k'},
+  { color: '#1be5b5', rango: '5k - 15k'},
+  { color: '#a4fc3c', rango: '15k - 25k' },
+  { color: '#fbb938', rango: '25k - 35k' },
+  { color: '#ae2e08', rango: '35k+' },
 ];
 
   const cardStyle = {
@@ -27,15 +28,15 @@ const leyendaItems = [
       display: 'flex', 
       flexDirection: 'row', 
       gap: '15px', 
-      width: '550px', // Ajusta según necesites
+      width: '550px', 
       pointerEvents: 'none' 
     }}>
       
       {/* SECCIÓN SLIDER */}
       <div style={{ ...cardStyle, width: '275px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-          <span style={{ fontSize: '10px', fontWeight: 'bold', opacity: 0.6 }}>FILTER</span>
-          <span style={{ color: '#3b82f6', fontWeight: 'bold' }}>{etiquetas[nivel]}</span>
+         
+          <span style={{ color: 'white' , fontFamily: "'Satoshi', sans-serif" }}>{etiquetas[nivel]}</span>
         </div>
 
         <input 
@@ -46,27 +47,63 @@ const leyendaItems = [
         />
       </div>
 
-      {/* SECCIÓN LEYENDA */}
-      <div style={{ ...cardStyle, width: '275px' }}>
-        <span style={{ fontSize: '10px', fontWeight: 'bold', opacity: 0.6, marginBottom: '10px' }}>
-          DENSITY (hab/km²)
-        </span>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          {leyendaItems.map((item, index) => (
-            <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div style={{ 
-                width: '14px', height: '14px', 
-                backgroundColor: item.color, 
-                borderRadius: '3px' 
-              }} />
-              <span style={{ fontSize: '11px' }}>{item.rango}</span>
-              <span style={{ fontSize: '10px', opacity: 0.4, marginLeft: 'auto' }}>{item.desc}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* CAJA DE LEYENDA COMPLETA */}
+<div style={{ 
+  pointerEvents: 'auto', 
+  backgroundColor: 'rgba(0, 0, 0, 0.45)', 
+  backdropFilter: 'blur(12px)',
+  WebkitBackdropFilter: 'blur(12px)',
+  color: 'white', 
+  padding: '20px', 
+  borderRadius: '16px', 
+  width: '350px',
+  border: '1px solid rgba(255, 255, 255, 0.1)',
+  fontFamily: "'Satoshi', sans-serif",
+}}>
+  {/* Título de la Leyenda */}
+  <span style={{ 
+    fontSize: '14px', 
+    fontWeight: '600', 
+    opacity: 0.8, 
+    
+    letterSpacing: '1px',
+    display: 'block',
+    marginBottom: '12px' 
+  }}>
+    Population Density (hab/km²)
+  </span>
 
-    </div>
+  {/* CONTENEDOR EN DOS COLUMNAS (GRID) */}
+  <div style={{ 
+    display: 'grid', 
+    gridTemplateColumns: '1fr 1fr', 
+  }}>
+    {[
+ { color: '#4b2a7d', rango: '< 2k' },
+    { color: '#4686fb', rango: '2 - 5k'},
+  { color: '#1be5b5', rango: '5k - 15k'},
+  { color: '#a4fc3c', rango: '15k - 25k' },
+  { color: '#fbb938', rango: '25k - 35k' },
+  { color: '#ae2e08', rango: '35k+' },
+    ].map((item, index) => (
+      <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ 
+          width: '12px', 
+          height: '12px', 
+          backgroundColor: item.color, 
+          borderRadius: '3px',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }} />
+        <span style={{ fontSize: '11px', fontWeight: '400' }}>
+          {item.rango}
+        </span>
+      </div>
+    ))}
+  </div>
+</div>
+</div>
+
+
   );
 };
 

@@ -50,11 +50,11 @@ function App() {
         <Title />
 
         {/* CAJA 2: SIDEBAR CARD */}
-        <div style={{ pointerEvents: 'auto', width: '350px' }}>
+        <div style={{ pointerEvents: 'auto',  width: '200px' }}>
           <SidebarCard 
             titulo="About the project"
             descripcion="The Andes shape the landscape of Latin America, influencing its terrain and where people settle from low valleys to high mountain regions. Few places in the world sustain large populations above 2,000 meters, yet across Latin America the Andean range makes high-elevation living a defining feature of the territory."
-            etiquetas={['South America', 'Altitud', 'Population', 'Density']}
+            etiquetas={['South America', 'Altitude', 'Population', 'Density', 'Andean Range']}
           />
         </div>
 
