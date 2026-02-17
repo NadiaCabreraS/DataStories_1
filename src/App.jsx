@@ -51,8 +51,8 @@ function App() {
                 pointerEvents: 'none',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '20px',
-                padding: '40px',
+                gap: '12px',
+                padding: '25px',
                 boxSizing: 'border-box',
                 alignItems: 'flex-start',
               }}

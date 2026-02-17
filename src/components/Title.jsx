@@ -21,7 +21,7 @@ const Title = () => {
         margin: 0, 
         fontWeight: 770, 
         
-        fontSize: '45px', 
+        fontSize: '40px', 
         textTransform: 'uppercase',
         lineHeight: '1.1',
         letterSpacing: '-1px'
