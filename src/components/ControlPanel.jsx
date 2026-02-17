@@ -12,7 +12,7 @@ const leyendaItems = [
 
   const cardStyle = {
     pointerEvents: 'auto',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.15)',
     backdropFilter: 'blur(8px)',
     color: 'white',
     padding: '20px',
@@ -52,7 +52,7 @@ const leyendaItems = [
       {/* CAJA DE LEYENDA COMPLETA */}
 <div style={{ 
   pointerEvents: 'auto', 
-  backgroundColor: 'rgba(0, 0, 0, 0.45)', 
+  backgroundColor: 'rgba(0, 0, 0, 0.15)', 
   backdropFilter: 'blur(12px)',
   WebkitBackdropFilter: 'blur(12px)',
   color: 'white', 

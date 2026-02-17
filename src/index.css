@@ -66,3 +66,16 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+@media (max-height: 850px) {
+  .sidebar-container {
+    transform: scale(0.9); /* Encoge todo un 10% si la pantalla es bajita */
+    transform-origin: top left;
+  }
+}
+
+@media (max-height: 700px) {
+  .sidebar-container {
+    transform: scale(0.8); /* Encoge un 20% en laptops pequeñas */
+  }
+}

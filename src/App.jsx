@@ -59,6 +59,8 @@ function App() {
           />
         </div>
 
+        
+
         <ControlPanel 
         nivel={nivel} 
         setNivel={setNivel} 
@@ -95,8 +97,8 @@ function App() {
             lineHeight: '1.4'
           }}>
             Population Data: GHS-POP R2023A - GHS population grid multitemporal (1975-2030).European Commission, Joint Research Centre (JRC) 
-            SRTM Digital Elevation Model. 
-            Elevation Data: USGS GMTED2010 (Danielson & Gesch, 2011). Processing by HELCOM Metadata Catalogue.<br />
+             
+                          Elevation Data: USGS GMTED2010 (Danielson & Gesch, 2011). Processing by HELCOM Metadata Catalogue.<br />
             
           </p>
         </div>

@@ -5,7 +5,7 @@ const SidebarCard = ({ titulo = "Sin Título", descripcion = "", etiquetas = [] 
   return (
     <article 
     style={{ 
-        backgroundColor: 'rgba(0, 0, 0, 0.45)', // Negro con transparencia
+        backgroundColor: 'rgba(0, 0, 0, 0.15)', // Negro con transparencia
         backdropFilter: 'blur(12px)',        // Efecto de vidrio esmerilado
         WebkitBackdropFilter: 'blur(12px)',  // Compatibilidad para Safari
         color: 'white',                      // ¡Texto blanco para que se lea!

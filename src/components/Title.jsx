@@ -3,7 +3,7 @@ import React from 'react';
 const Title = () => {
   const headerStyle = {
     pointerEvents: 'auto',
-    backgroundColor: 'rgba(0, 0, 0, 0.45)', // El negro transparente que querías
+    backgroundColor: 'rgba(0, 0, 0, 0.15)', // El negro transparente que querías
     backdropFilter: 'blur(12px)',
     WebkitBackdropFilter: 'blur(12px)',
     color: 'white',
