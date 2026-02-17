@@ -32,7 +32,7 @@ const AltitudeChart = ({ selectedCountry }) => {
     labels: ['0m', '500m', '1000m', '1500m', '2000m', '2500m', '3000m', '3500m', '4000m', '4500m+'],
     datasets: [
       {
-        label: `Population in ${selectedCountry?.properties?.country || 'Selecciona...'} (%)`,
+        label: `${selectedCountry?.properties?.COUNTRY || 'Selecciona...'} (%)`,
         data: [
           selectedCountry?.properties?.share_pct_0 || 0,
           selectedCountry?.properties?.share_pct_500 || 0,

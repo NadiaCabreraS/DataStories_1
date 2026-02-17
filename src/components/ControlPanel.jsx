@@ -36,7 +36,9 @@ const leyendaItems = [
       <div style={{ ...cardStyle, width: '275px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
          
-          <span style={{ color: 'white' , fontFamily: "'Satoshi', sans-serif" }}>{etiquetas[nivel]}</span>
+          <span style={{ color: 'white' ,     fontSize: '14.5px', 
+    fontWeight: '600', 
+    opacity: 0.8, fontFamily: "'Satoshi', sans-serif" }}>{etiquetas[nivel]}</span>
         </div>
 
         <input 
@@ -58,14 +60,14 @@ const leyendaItems = [
   borderRadius: '16px', 
   width: '350px',
   border: '1px solid rgba(255, 255, 255, 0.1)',
-  fontFamily: "'Satoshi', sans-serif",
+  
 }}>
   {/* Título de la Leyenda */}
   <span style={{ 
     fontSize: '14px', 
     fontWeight: '600', 
     opacity: 0.8, 
-    
+    fontFamily: "'Satoshi', sans-serif",
     letterSpacing: '1px',
     display: 'block',
     marginBottom: '12px' 
@@ -90,11 +92,12 @@ const leyendaItems = [
         <div style={{ 
           width: '12px', 
           height: '12px', 
+
           backgroundColor: item.color, 
           borderRadius: '3px',
           border: '1px solid rgba(255,255,255,0.1)'
         }} />
-        <span style={{ fontSize: '11px', fontWeight: '400' }}>
+        <span style={{ fontSize: '11px', fontWeight: '400', fontFamily: "'Satoshi', sans-serif" }}>
           {item.rango}
         </span>
       </div>

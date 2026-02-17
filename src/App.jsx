@@ -23,6 +23,7 @@ function App() {
         <PopulationMap nivelActivo={nivel} 
         dataGeo={countrydata} 
         onSeleccionarPais={setPaisSeleccionado}
+        paisSeleccionado={paisSeleccionado}
           />
       </section>
 
@@ -52,7 +53,7 @@ function App() {
         {/* CAJA 2: SIDEBAR CARD */}
         <div style={{ pointerEvents: 'auto',  width: '200px' }}>
           <SidebarCard 
-            titulo="About the project"
+            
             descripcion="The Andes shape the landscape of Latin America, influencing its terrain and where people settle from low valleys to high mountain regions. Few places in the world sustain large populations above 2,000 meters, yet across Latin America the Andean range makes high-elevation living a defining feature of the territory."
             etiquetas={['South America', 'Altitude', 'Population', 'Density', 'Andean Range']}
           />
@@ -66,18 +67,39 @@ function App() {
 
   
 
-        {/* PASO C: EL CUADRO NUEVO (Abajo del slider) */}
+        {/* ALTITUDE CHART */}
         <div style={{ pointerEvents: 'auto', marginTop: '20px', width: '550px',height: '400px', // <--- VITAL: Ponle píxeles fijos para probar
   backgroundColor: 'rgba(255, 255, 255, 0.05)', // Un fondo gris oscuro para verlo
   borderRadius: '12px'
 }}>
-          {/* Le pasamos el país que guardamos en el Paso A */}
+          
           <AltitudeChart 
             selectedCountry={paisSeleccionado} 
             
           />
         </div>
 
+
+          {/* CREDITS */}
+              <div style={{ 
+          marginTop: '12px', 
+          padding: '0 5px', // Un poco de alineación con el borde del gráfico
+          textAlign: 'left' 
+        }}>
+          <p style={{ 
+            margin: 0,
+            fontFamily: "'Satoshi', sans-serif", 
+            fontSize: '11px', 
+            color: 'rgba(255, 255, 255, 0.5)', // Muy sutil para que no distraiga
+            letterSpacing: '0.5px',
+            lineHeight: '1.4'
+          }}>
+            Population Data: GHS-POP R2023A - GHS population grid multitemporal (1975-2030).European Commission, Joint Research Centre (JRC) 
+            SRTM Digital Elevation Model. 
+            Elevation Data: USGS GMTED2010 (Danielson & Gesch, 2011). Processing by HELCOM Metadata Catalogue.<br />
+            
+          </p>
+        </div>
 
       </nav>
     </div>

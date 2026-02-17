@@ -5,7 +5,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 // 1. Movemos niveles aquí afuera para que todos los efectos puedan verlo
 const NIVELES = ['base', '500', '1000', '2000', '3000', '4000', '4500'];
 
-const PopulationMap = ({ nivelActivo, dataGeo, onSeleccionarPais }) => {
+const PopulationMap = ({ nivelActivo, dataGeo, onSeleccionarPais, paisSeleccionado }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
@@ -15,21 +15,23 @@ const PopulationMap = ({ nivelActivo, dataGeo, onSeleccionarPais }) => {
     map.current = new maplibregl.Map({
       container: mapContainer.current,
       style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-      center: [-74, -15],
-      zoom: 3.5,
+      center: [-74, -10],
+      zoom: 4,
       maxZoom: 7, 
       attributionControl: false
     });
   }, []);
 
   // EFECTO 2: Capa de Países (GeoJSON) y Clics
-  useEffect(() => {
-    const mapInstance = map.current;
-    if (!mapInstance || !dataGeo) return;
+        useEffect(() => {
+            const mapInstance = map.current;
+            if (!mapInstance || !dataGeo) return;
 
     const setupGeoJson = () => {
       if (!mapInstance.getSource('countries-source')) {
         mapInstance.addSource('countries-source', { type: 'geojson', data: dataGeo });
+
+        ///Invisible layer clicks
         mapInstance.addLayer({
           id: 'paises-layer',
           type: 'fill',
@@ -39,16 +41,64 @@ const PopulationMap = ({ nivelActivo, dataGeo, onSeleccionarPais }) => {
             'fill-opacity': 0.0 
           }
         });
+        
+        // 2. NUEVA: Capa de resaltado (Relleno blanco)
+            mapInstance.addLayer({
+                id: 'pais-highlight-fill',
+                type: 'fill',
+                source: 'countries-source',
+                paint: {
+                    'fill-color': '#fff',
+                    'fill-opacity': 0.05 // Muy sutil para no tapar el raster
+                },
+                filter: ['==', ['get', 'COUNTRY'], ''] // Empieza vacía
+            });
 
-        mapInstance.on('click', 'paises-layer', (e) => {
-          onSeleccionarPais(e.features[0]);
-        });
-      }
+          // 3. NUEVA: Capa de borde (Línea blanca)
+              mapInstance.addLayer({
+                  id: 'pais-highlight-outline',
+                  type: 'line',
+                  source: 'countries-source',
+                  paint: {
+                      'line-color': '#fff',
+                      'line-width': 1.5,
+                      'line-opacity': 0.6
+                  },
+                  filter: ['==', ['get', 'COUNTRY'], '']
+              });
+
+          // Cambiar cursor al pasar sobre un país
+              mapInstance.on('mouseenter', 'paises-layer', () => {
+                  mapInstance.getCanvas().style.cursor = 'pointer';
+              });
+              mapInstance.on('mouseleave', 'paises-layer', () => {
+                  mapInstance.getCanvas().style.cursor = '';
+              });
+
+              mapInstance.on('click', 'paises-layer', (e) => {
+                  onSeleccionarPais(e.features[0]);
+              });
+          }
     };
 
     if (mapInstance.isStyleLoaded()) setupGeoJson();
     else mapInstance.once('load', setupGeoJson);
   }, [dataGeo]);
+
+  // EFECTO DE RESALTADO: Se dispara cuando cambia el país
+  useEffect(() => {
+    const mapInstance = map.current;
+    if (!mapInstance || !mapInstance.isStyleLoaded()) return;
+
+    const nombre = paisSeleccionado?.properties?.COUNTRY|| '';
+    const filtro = ['==', ['get', 'COUNTRY'], nombre];
+    
+    if (mapInstance.getLayer('pais-highlight-fill')) {
+      mapInstance.setFilter('pais-highlight-fill', filtro);
+      mapInstance.setFilter('pais-highlight-outline', filtro);
+    }
+  }, [paisSeleccionado]);
+
 
   // EFECTO 3: Control de Capas Raster (Tiles)
   useEffect(() => {

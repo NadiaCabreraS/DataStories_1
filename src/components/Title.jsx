@@ -19,8 +19,8 @@ const Title = () => {
     <header style={headerStyle}>
       <h1 style={{ 
         margin: 0, 
-        fontWeight: 600, 
-        fontFamily: "'Satoshi', sans-serif",
+        fontWeight: 770, 
+        
         fontSize: '45px', 
         textTransform: 'uppercase',
         lineHeight: '1.1',

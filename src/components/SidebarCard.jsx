@@ -31,7 +31,7 @@ const SidebarCard = ({ titulo = "Sin Título", descripcion = "", etiquetas = [] 
       <span key={index} style={{ 
         backgroundColor: 'rgba(59, 130, 246, 0.2)', 
         color: '#60a5fa', 
-        fontFamily: "'Satoshi', sans-serif",
+        
         padding: '4px 10px', 
         borderRadius: '6px', 
         fontSize: '14px', 
