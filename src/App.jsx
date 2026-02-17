@@ -34,17 +34,29 @@ function App() {
               position: 'fixed',
               top: 0,
               left: 0,
-              width: 'min(92vw, 520px)',       // ✅ nunca más grande que 520px, pero se achica en pantallas chicas
-              height: '100dvh',                // ✅ mejor que 100vh en algunos browsers
+              width: '520px',
+              height: '100dvh',
               zIndex: 9999,
               pointerEvents: 'none',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              gap: '16px',
-              padding: 'clamp(16px, 3vw, 32px)' // ✅ padding que escala con el viewport
+              padding: 0,            // importante: el padding lo metemos adentro del wrapper escalado
             }}
           >
+            {/* Wrapper escalado */}
+            <div
+              style={{
+                transform: 'scale(var(--ui-scale))',
+                transformOrigin: 'top left',
+                width: 'calc(520px / var(--ui-scale))',   // compensa el scale para que “ocupe” lo mismo
+                height: 'calc(100dvh / var(--ui-scale))',
+                pointerEvents: 'none',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '20px',
+                padding: '40px',
+                boxSizing: 'border-box',
+                alignItems: 'flex-start',
+              }}
+            >
       
         
         {/* CAJA 1: TITULO */}
@@ -107,7 +119,7 @@ function App() {
             
           </p>
         </div>
-
+          </div>
       </nav>
     </div>
   );
