@@ -1,3 +1,18 @@
+/* Se activa solo si el ancho es >= 900px Y la altura es >= 600px */
+@media screen and (width >= 900px) {
+  article {
+    padding: 3rem; /* Padding generoso por defecto */
+  }
+
+  /* Si la pantalla es ancha pero tiene poca altura (ej. un monitor pequeño o split screen) */
+  @media (max-height: 700px) {
+    article {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+  }
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -67,16 +82,4 @@ button:focus-visible {
   }
 }
 
-@media (max-height: 850px) {
-  .sidebar-container {
-    transform: scale(0.9); /* Encoge todo un 10% si la pantalla es bajita */
-    transform-origin: top left;
-  }
-}
-
-@media (max-height: 700px) {
-  .sidebar-container {
-    transform: scale(0.8); /* Encoge un 20% en laptops pequeñas */
-  }
-}
 

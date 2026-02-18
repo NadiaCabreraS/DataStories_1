@@ -7,17 +7,27 @@ import AltitudeChart from './components/AltitudeChart.jsx';
 import countrydata from './assets/data_complete.json';
 import sudamericastats from  './assets/sudamerica_stats.json';
 import ControlPanel from './components/ControlPanel.jsx';
+import WelcomeModal from './components/WelcomeModal.jsx';
 
 
 function App() {
   const [nivel, setNivel] = useState(0);
   const [paisSeleccionado, setPaisSeleccionado] = useState(null);
   const etiquetas = ['+0m (All of South America)', '+500m', '+1000m', '+2000m', '+3000m', '+4000m', '+4500m'];
+  const [showModal, setShowModal] = useState(true); //
 
+ 
   return (
     // CONTENEDOR RAIZ: Sin nada de estilos que hereden
     <div style={{ position: 'relative', width: '100vw', height: '100vh', background: 'black', overflow: 'hidden' }}>
       
+
+    {/* WELCOME MODAL */}
+      <WelcomeModal 
+        isOpen={showModal} 
+        onClose={() => setShowModal(false)} 
+      />
+
       {/* CAPA 1: EL MAPA (Abajo) */}
       <section style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
         <PopulationMap nivelActivo={nivel} 
