@@ -5,6 +5,7 @@ import autoprefixer from 'autoprefixer'
 
 export default defineConfig({
   plugins: [react()],
+  
   css: {
     postcss: {
       plugins: [
@@ -14,4 +15,8 @@ export default defineConfig({
     },
   },
   base: '/DataStories_1/',
+  resolve: {
+  dedupe: ['chart.js']
+}
 })
+

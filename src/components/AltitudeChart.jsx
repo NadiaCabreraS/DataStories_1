@@ -1,31 +1,7 @@
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  BarController,
-  LineController,
-  LinearScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js';
 
 import { Chart } from 'react-chartjs-2';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarController,
-  BarElement,
-  LineController,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend
-);
+
 
 const SA_DATA = [59.22, 25.91, 4.11, 1.71, 1.11, 5.11, 1.09, 1.32, 0.35, 0.02];
 
