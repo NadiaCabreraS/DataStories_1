@@ -37,13 +37,23 @@ const WelcomeModal = ({ isOpen, onClose }) => {
           fontFamily: 'Satoshi, sans-serif', 
           lineHeight: '1.6', 
           color: 'rgba(255, 255, 255, 0.8)',
-          fontSize: '1.1rem',
+          fontSize: '1.2rem',
           marginBottom: '30px'
         }}>
-          This interactive map explores how elevation shapes human settlements across the Andes. 
-          Use the <strong>altitude slider</strong> to filter the population living above specific heights 
-          and <strong> select a country </strong> to see its distribution profile.
-        </p>
+          Discover how population distribution changes with elevation across South America and the Andes. <br />
+          <br />
+          </p>
+          <ul style={{
+                fontFamily: 'Satoshi, sans-serif',
+                lineHeight: '1.6',
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontSize: '1rem',
+                marginBottom: '30px',
+                paddingLeft: '20px'
+                }}>
+                <li>Move the <strong>altitude slider</strong> to reveal where people live at different elevations </li>
+                <li><strong>Click a country</strong> to see its distribution profile.</li>
+                </ul>
 
         <button 
           onClick={onClose}
@@ -61,7 +71,7 @@ const WelcomeModal = ({ isOpen, onClose }) => {
           onMouseOver={(e) => e.target.style.backgroundColor = '#2563eb'}
           onMouseOut={(e) => e.target.style.backgroundColor = '#3b82f6'}
         >
-          Explore the Map
+          Start Exploring
         </button>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
@@ -8,6 +8,7 @@ const NIVELES = ['base', '500', '1000', '2000', '3000', '4000', '4500'];
 const PopulationMap = ({ nivelActivo, dataGeo, onSeleccionarPais, paisSeleccionado }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
+  const [paisHover, setPaisHover] = useState(null);
 
   // EFECTO 1: Inicialización del mapa (una sola vez)
   useEffect(() => {
@@ -41,6 +42,17 @@ const PopulationMap = ({ nivelActivo, dataGeo, onSeleccionarPais, paisSelecciona
             'fill-opacity': 0.0 
           }
         });
+
+        mapInstance.addLayer({
+          id: 'pais-hover-outline',
+          type: 'line',
+          source: 'countries-source',
+          paint: {
+            'line-color': '#ffffff',
+            'line-width': .7  // más delgadito que el click
+          },
+          filter: ['==', ['get', 'COUNTRY'], '']
+        });
         
         // 2. NUEVA: Capa de resaltado (Relleno blanco)
             mapInstance.addLayer({
@@ -61,22 +73,41 @@ const PopulationMap = ({ nivelActivo, dataGeo, onSeleccionarPais, paisSelecciona
                   source: 'countries-source',
                   paint: {
                       'line-color': '#fff',
-                      'line-width': 1.5,
+                      'line-width': 1,
                       'line-opacity': 0.6
                   },
                   filter: ['==', ['get', 'COUNTRY'], '']
               });
 
-          // Cambiar cursor al pasar sobre un país
-              mapInstance.on('mouseenter', 'paises-layer', () => {
-                  mapInstance.getCanvas().style.cursor = 'pointer';
+          // Set a white border when passing the mouse over
+              mapInstance.on('mousemove', 'paises-layer', (e) => {
+                mapInstance.getCanvas().style.cursor = 'pointer';
+
+                const feature = e.features?.[0];
+                if (!feature) return;
+
+                setPaisHover(feature.properties.COUNTRY);
+
+                mapInstance.setFilter('pais-hover-outline', [
+                  '==',
+                  ['get', 'COUNTRY'],
+                  feature.properties.COUNTRY
+                ]);
               });
+
               mapInstance.on('mouseleave', 'paises-layer', () => {
-                  mapInstance.getCanvas().style.cursor = '';
+                mapInstance.getCanvas().style.cursor = '';
+                setPaisHover(null);
+
+                mapInstance.setFilter('pais-hover-outline', [
+                  '==',
+                  ['get', 'COUNTRY'],
+                  ''
+                ]);
               });
 
               mapInstance.on('click', 'paises-layer', (e) => {
-                  onSeleccionarPais(e.features[0]);
+                onSeleccionarPais(e.features[0]);
               });
           }
     };
